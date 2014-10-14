@@ -1,0 +1,5 @@
+#!/bin/bash
+
+expr=$(echo $@ | sed 's/ /),\\\(./g')
+cmd=".[] | \"\\(.$expr)\""
+jq --raw-output "$cmd"
