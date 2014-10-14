@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, json, argparse
+import sys, json, argparse, re
 from lxml import etree
 from lxml.cssselect import CSSSelector
 
@@ -14,7 +14,12 @@ def process_row_dict(row):
     return d
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("--expression", "-e", help="CSS selector query", type=str)
+parser.add_argument("--expression", "-e", help="CSS selector query", type=str, default="table tr")
+parser.add_argument("--numbers", "-n", help="Give a list of numbers (like '4,5') of cells to take from each row")
+parser.add_argument("--plain-text-output", "-c", help="Output plain text (CSV) output with the given separator", nargs="?", const=",", default=None, metavar="separator")
+parser.add_argument("--no-number-processing", help="Turn off number formatting, where commas are stripped from number strings", action="store_true")
+parser.add_argument("--skip-first", "-f", help="Skip outputting first row; helpful for tables that include a header", action="store_true")
+parser.add_argument("--skip-nonfull-rows", "-s", help="Skip rows where selected data is empty", action="store_true")
 parser.add_argument("field", help="Field in output structure", type=str, nargs='*')
 opts = parser.parse_args(sys.argv[1:])
 
@@ -23,8 +28,42 @@ parser = etree.HTMLParser()
 doc = etree.parse(sys.stdin, parser)
 table = sel(doc) 
 
-process_row = process_row_list if opts.field == [] else process_row_dict
-data = [ process_row(row) for row in table ]
+data = [ process_row_list(row) for row in table ]
 
-json.dump(data, sys.stdout)
+if opts.numbers:
+    numbers = map(int, opts.numbers.split(','))
+elif opts.field:
+    numbers = range(len(opts.field))
+if numbers:
+    new_row = lambda row: [ d for i, d in enumerate(row) if i in numbers ]
+    data = [ new_row(row) for row in data ]
+
+if not opts.no_number_processing:
+    for row in data:
+        for i,d in enumerate(row):
+            if re.match("^[0-9,]+$", d):
+                row[i] = d.replace(',','')
+
+if opts.skip_nonfull_rows: # make this something you can turn off
+    data = [row for row in data if all(row)]
+
+if opts.skip_first:
+    data = data[1:]
+
+if opts.field:
+    new_data = []
+    for row in data:
+        d = dict()
+        for i,f in enumerate(opts.field):
+            d[f] = row[i]
+        new_data.append(d)
+    data = new_data
+
+
+if opts.plain_text_output:
+    for row in data:
+        line = row.values() if opts.field else row
+        print opts.plain_text_output.join(line)
+else:
+    json.dump(data, sys.stdout)
 

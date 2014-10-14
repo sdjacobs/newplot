@@ -9,6 +9,8 @@ It depends on lxml and cssselect.
 
 - [newplot](bin/newplot) will throw up some JSON into a D3 template and open it up. Whew! Right now it requires Chrome, but one could very easily edit it to use a different browser. Guess where I came up with the clever name.
 
+- [j2c](bin/j2c) is a very thin wrapper around [jq](http://stedolan.github.io/jq/) that will convert JSON to CSV (right now, actually TSV but w/e, should be easily configurable).
+
 # Example
 
 Compare to pigshell's [examples](http://pigshell.com/v/0.6.2/doc/README.html) and note how I copied them.
@@ -21,4 +23,15 @@ Oh no, no Facebook integration, what a shame. Not to be snarky but I got Dropbox
 
 ```bash
 ls ~/Dropbox
+```
+
+But my favorite part is how it integrates with tools I already use. Nothing will ever beat Gnuplot for easy plotting of X-Y data.
+
+```bash
+curl http://en.wikipedia.org/wiki/World_population_estimates | \
+    table2js -e 'table.wikitable tr' year foo bar data | \
+    j2c .year .data | \
+    awk -F'\t' '$1 && $2 && NR > 1' | \
+    sed 's/,//g' | \
+    gnuplot -e "plot '-'"
 ```
