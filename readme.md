@@ -1,7 +1,7 @@
 # Intro
 
 Inspired by [pigshell](http://pigshell.com/), I'm writing a couple of tiny scripts to do some light web scraping
-and push data to D3 templates. The design philosophy, such as there is, is to be very, very minimalist.
+and push data to D3 templates.
 
 - [table2js](bin/table2js) is a Python script that takes in HTML document and a CSS selector, and spits out an array of arrays of the text inside what's selected (some examples will make clear what I mean by this). With extra arguments it will build up an array of JSON objects, rather than an array of arrays.
 The program name and the interface are cribbed from the pigshell command of the same name.
