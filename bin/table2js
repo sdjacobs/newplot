@@ -1,0 +1,30 @@
+#!/usr/bin/python
+
+import sys, json, argparse
+from lxml import etree
+from lxml.cssselect import CSSSelector
+
+def process_row_list(row):
+    return [html.xpath("string()").strip() for html in row]
+def process_row_dict(row):
+    d = dict()
+    for i,f in enumerate(opts.field):
+        html = row[i]
+        d[f] = html.xpath("string()").strip()
+    return d
+
+parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument("--expression", "-e", help="CSS selector query", type=str)
+parser.add_argument("field", help="Field in output structure", type=str, nargs='*')
+opts = parser.parse_args(sys.argv[1:])
+
+sel = CSSSelector(opts.expression)
+parser = etree.HTMLParser()
+doc = etree.parse(sys.stdin, parser)
+table = sel(doc) 
+
+process_row = process_row_list if opts.field == [] else process_row_dict
+data = [ process_row(row) for row in table ]
+
+json.dump(data, sys.stdout)
+

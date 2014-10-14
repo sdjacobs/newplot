@@ -1,0 +1,23 @@
+#!/bin/bash
+
+chrome='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+tmp=/tmp/tmp.html
+
+if [ -z "$2" ]
+then
+    file="-"
+else
+    file="$2"
+fi
+
+
+cat $1 > $tmp
+echo "<script>" >> $tmp
+echo "var data =" >> $tmp
+cat $file >> $tmp
+echo >> $tmp
+echo "main(null, data)" >> $tmp
+echo "</script><title>newplot</title>" >> $tmp
+
+"$chrome" --new-window --incognito --app=file://$tmp & >/dev/null &2>1
+
