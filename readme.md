@@ -2,14 +2,14 @@
 
 Over the weekend, I came across [pigshell](http://pigshell.com/v/0.6.2/), a webapp that is supposed to let
 you "unix the web." Leaving aside the fact that the Web is
-[fairly well Unix'd](http://en.wikipedia.org/wiki/Usage_share_of_operating_systems#Servers_on_the_Internet), pigshell is sort of neat... you can browse Internet resources -- web pages, your Facebook and your Dropbox -- from a shell-style interface, do a li'l
-data munging, and throw up some slick visualizations from what you've found. It's well done, and a cool experience.
+[fairly well Unix'd](http://en.wikipedia.org/wiki/Usage_share_of_operating_systems#Servers_on_the_Internet), pigshell is neat. You can browse Internet resources -- web pages, your Facebook and your Dropbox -- from a shell-style interface, do a li'l
+data munging, and throw up some slick visualizations from what you've found. It's well done and a cool experience.
 
-THat said, the ability to send a Facebook post from a command isn't about to disrupt my slack-jawed, drooling point-and-click 
+That said, the ability to send a Facebook post from a command isn't about to disrupt my slack-jawed, drooling point-and-click 
 Internet experience.
 And I'm really not so hot on having to run a small server on my desktop to access local files, or the reduplication
 of standard Unix utilities with some nonstandard interfaces. 
-And I would love to avoid web app crud. I don't know what a cross-origin browser request is or why I can't make one, and please just don't tell me. Pigshell does some cool wizardry to get out of the sandbox, but I would rather just not be playing in sandbox because I am an adult.
+And I would love to avoid web app crud. I don't know what a cross-origin browser request is or why I can't make one, and please just don't tell me. Pigshell does some cool wizardry to get out of the sandbox, but I would rather not be playing in a sandbox in the first place.
 
 That ability to grab data from the web, do some light processing, and
 kick out a visualization was pretty cool. If I could do that from the best shell, *my* shell, that shell that already exists on my computer, then we're talking. Especially if it could integrate with tools that I'm already using and I will continue using until you pry them out
