@@ -10,8 +10,8 @@ On the other hand: The ability to send a Facebook post from a command isn't abou
 Internet experience. I'm pretty happy with that.
 And I'm really not so hot on having to run a small server on my desktop to access local files, or the reduplication
 of standard Unix utilities with some nonstandard interfaces. But: that ability to grab data from the web, do some light processing, and
-kick out a visualization? That was awesome! If I could do that from the best shell, /my/ shell, that shell that already exists on my computer -- 
-/that/ would be something. Especially if it could integrate with tools that I'm already using and I will continue using until you pry them out
+kick out a visualization? That was awesome! If I could do that from the best shell, *my* shell, that shell that already exists on my computer -- 
+*that* would be something. Especially if it could integrate with tools that I'm already using and I will continue using until you pry them out
 of my cold, dead hands, like awk and Gnuplot. More specifically, if I had a small library of D3 templates that I could kick data to using
 a tiny shell command, I think that would bring my data analysis closer to my actual data in a really helpful way. Pigshell's templates
 are an awesome starting place (which I will shamelessly copy). 
@@ -21,10 +21,10 @@ comfort of my own $HOME. I'm too lazy to deal with a whole new way of doing thin
 So I've got a couple very, very rough tools:
 
 - [table2js](bin/table2js) is a Python script that takes in HTML document and a CSS selector, and spits out an array of arrays of the text inside what's selected (some examples will make clear what I mean by this). With extra arguments it will build up an array of JSON objects, rather than an array of arrays.
-The program name and the interface are cribbed from the pigshell command of the same name. It depends on lxml and cssselect, which you can install with Pip.
+The program name and the interface are cribbed from the pigshell command of the same name.
+It depends on lxml and cssselect.
 
-- [newplot](bin/newplot) will throw up some JSON into a D3 template and open it up. Whew! Right now it requires Chrome, but one could very
-easily edit it to use a different browser. Guess [where](http://www.gnuplot.info/) I came up with the exceedingly clever name.
+- [newplot](bin/newplot) will throw up some JSON into a D3 template and open it up. Whew! Right now it requires Chrome, but one could very easily edit it to use a different browser. Guess where I came up with the clever name.
 
 # Example
 
@@ -32,4 +32,10 @@ Again, compare to pigshell's [examples](http://pigshell.com/v/0.6.2/doc/README.h
 
 ```bash
 curl http://pigshell.com/sample/life-expectancy.html | table2js -e "table.wikitable tr" foo country data | newplot templates/d3-worldmap1.html
+```
+
+Oh no, no Facebook integration, what a shame. Not to be snarky but I got your Dropbox:
+
+```bash
+ls ~/Dropbox
 ```
