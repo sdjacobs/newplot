@@ -156,14 +156,6 @@ var defaults= {
     inverse: ""
 };
 
-window.addEventListener('message', function(e) {
-    var opts = e.data.opts,
-        data = e.data.data;
-
-    return main(opts, data);
-});
-
-
 function main(o, data) {
     var opts = $.extend({}, defaults, o),
         colorscale = opts.colors,
@@ -363,8 +355,8 @@ function main(o, data) {
             });
         }
         var myheight = document.documentElement.scrollHeight || document.body.scrollHeight;
-        //window.parent.postMessage({height: myheight}, '*');
     }
 }
 
+main(OPTIONS, DATA)
 </script>

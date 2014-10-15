@@ -11,7 +11,7 @@ else
 fi
 
 data=$(cat $file)
-m4 -DOPTIONS=null -DDATA="$data" $1 > $tmp 
+m4 -P -DOPTIONS=null -DDATA="$data" $1 > $tmp 
 
 "$chrome" --new-window --incognito --app=file://$tmp & >/dev/null &2>1
 

@@ -28,10 +28,12 @@ ls ~/Dropbox
 But my favorite part is how it integrates with tools I already use. Nothing will ever beat Gnuplot for easy plotting of X-Y data.
 
 ```bash
-curl http://en.wikipedia.org/wiki/World_population_estimates | \
-    table2js -e 'table.wikitable tr' year foo bar data | \
-    j2c .year .data | \
-    awk -F'\t' '$1 && $2 && NR > 1' | \
-    sed 's/,//g' | \
-    gnuplot -e "plot '-'"
+curl http://en.wikipedia.org/wiki/World_population_estimates | table2js -e "table.wikitable tr" -fs -n 0,3 -c' ' |  gnuplot -e "plot '-'
 ```
+
+Or:
+
+```bash
+curl http://en.wikipedia.org/wiki/World_population_estimates | table2js -e "table.wikitable tr" -fs -n 0,3 | newplot templates/d3-linegraph.html
+```
+

@@ -14,7 +14,7 @@ def process_row_dict(row):
     return d
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument("--expression", "-e", help="CSS selector query", type=str, default="table tr")
+parser.add_argument("--expression", "-e", help="CSS selector query", type=str)
 parser.add_argument("--numbers", "-n", help="Give a list of numbers (like '4,5') of cells to take from each row")
 parser.add_argument("--plain-text-output", "-c", help="Output plain text (CSV) output with the given separator", nargs="?", const=",", default=None, metavar="separator")
 parser.add_argument("--no-number-processing", help="Turn off number formatting, where commas are stripped from number strings", action="store_true")
@@ -23,13 +23,16 @@ parser.add_argument("--skip-nonfull-rows", "-s", help="Skip rows where selected 
 parser.add_argument("field", help="Field in output structure", type=str, nargs='*')
 opts = parser.parse_args(sys.argv[1:])
 
-sel = CSSSelector(opts.expression)
-parser = etree.HTMLParser()
-doc = etree.parse(sys.stdin, parser)
-table = sel(doc) 
+if opts.expression:
+    sel = CSSSelector(opts.expression)
+    parser = etree.HTMLParser()
+    doc = etree.parse(sys.stdin, parser)
+    table = sel(doc) 
+    data = [ process_row_list(row) for row in table ]
+else:
+    data = [line.strip().split(' ') for line in sys.stdin]
 
-data = [ process_row_list(row) for row in table ]
-
+numbers = None
 if opts.numbers:
     numbers = map(int, opts.numbers.split(','))
 elif opts.field:

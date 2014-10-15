@@ -4,9 +4,9 @@
 <script src="http://d3js.org/d3.v3.min.js">
 </script>
 <script>
-function main(opts, data) {
+function main(data) {
 
-    var width = 800, height = 800, radius = 390;
+    var width = 600, height = 600, radius = 290;
 
     var color = d3.scale.category20();
 
@@ -32,8 +32,8 @@ function main(opts, data) {
         .style("fill", function(d) { return color(d.data.name); });
 
     path.append("title")
-        .html(function(d) { return d.data.name; });
+        .html(function(d) { return d.data.name + " (" + d.data.value + ")"; });
 }
 
-main(OPTIONS, DATA)
+main(DATA);
 </script>
