@@ -21,6 +21,7 @@ parser.add_argument("--no-number-processing", help="Turn off number formatting, 
 parser.add_argument("--skip-first", "-f", help="Skip outputting first row; helpful for tables that include a header", action="store_true")
 parser.add_argument("--skip-nonfull-rows", "-s", help="Skip rows where selected data is empty", action="store_true")
 parser.add_argument("field", help="Field in output structure", type=str, nargs='*')
+parser.add_argument("--input-separator", "-i", help="Field separator for plain-text input", type=str, default=" ")
 opts = parser.parse_args(sys.argv[1:])
 
 if opts.expression:
@@ -30,7 +31,7 @@ if opts.expression:
     table = sel(doc) 
     data = [ process_row_list(row) for row in table ]
 else:
-    data = [line.strip().split(' ') for line in sys.stdin]
+    data = [line.strip().split(opts.input_separator) for line in sys.stdin]
 
 numbers = None
 if opts.numbers:

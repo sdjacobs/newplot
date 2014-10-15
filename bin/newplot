@@ -2,6 +2,7 @@
 
 chrome='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 tmp=/tmp/newplot.$RANDOM.html
+templates_dir=$( dirname "${BASH_SOURCE[0]}" )/../templates
 
 if [ -z "$2" ]
 then
@@ -11,7 +12,7 @@ else
 fi
 
 data=$(cat $file)
-m4 -P -DOPTIONS=null -DDATA="$data" $1 > $tmp 
+m4 -P -I$templates_dir -DOPTIONS=null -DDATA="$data" $1 > $tmp 
 
 "$chrome" --new-window --incognito --app=file://$tmp & >/dev/null &2>1
 

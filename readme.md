@@ -17,7 +17,7 @@ It depends on lxml and cssselect.
 Compare to pigshell's [examples](http://pigshell.com/v/0.6.2/doc/README.html) and note how I copied them.
 
 ```bash
-curl http://pigshell.com/sample/life-expectancy.html | tadge -e "table.wikitable tr" foo country data | newplot templates/d3-worldmap1.html
+curl http://pigshell.com/sample/life-expectancy.html | tadge -e "table.wikitable tr" foo country data | newplot d3-worldmap1.html
 ```
 
 Oh no, no Facebook integration, what a shame. Not to be snarky but I got Dropbox:
@@ -35,6 +35,11 @@ curl http://en.wikipedia.org/wiki/World_population_estimates | tadge -e "table.w
 Compare to:
 
 ```bash
-curl http://en.wikipedia.org/wiki/World_population_estimates | tadge -e "table.wikitable tr" -fs -n 0,3 | newplot templates/d3-linegraph.html
+curl http://en.wikipedia.org/wiki/World_population_estimates | tadge -e "table.wikitable tr" -fs -n 0,3 | newplot d3-linegraph.html
 ```
 
+Right now, I'm dealing with a database full of book records from a library. What's in it?
+
+```
+sqlite3 books.sql 'select language,count(*) from books group by language' | tadge -i'|' name value | newplot d3-pie.html
+```
