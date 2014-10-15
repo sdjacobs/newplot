@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<body>
+</body>
+<script src="http://d3js.org/d3.v3.min.js">
+</script>
+<script>
+function main(opts, data) {
+
+    var width = 800, height = 800, radius = 390;
+
+    var color = d3.scale.category20();
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("style", "border:10px")
+        .append("g")
+            .attr("transform", "translate(" + (width / 2) + "," + (height / 2 ) + ")");
+
+    var pie = d3.layout.pie()
+        .sort(null)
+        .value(function(d) { return d.value });    
+    var data = pie(data);
+    
+    var arc = d3.svg.arc().outerRadius(radius).innerRadius(0);
+
+    var path = svg.selectAll("path")
+          .data(data)
+        .enter().append("g")
+        .append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.name); });
+
+    path.append("title")
+        .html(function(d) { return d.data.name; });
+}
+
+main(OPTIONS, DATA)
+</script>
