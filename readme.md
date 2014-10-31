@@ -45,3 +45,7 @@ Right now, I'm dealing with a database full of book records from a library. What
 ```
 sqlite3 books.sql 'select language,count(*) from books group by language' | tadge -i'|' name value | newplot d3-pie.html
 ```
+
+# Future directions
+
+Templates should conform to Bostoc's reusable chart [guide](http://bost.ocks.org/mike/chart/).
