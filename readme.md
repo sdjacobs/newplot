@@ -48,4 +48,4 @@ sqlite3 books.sql 'select language,count(*) from books group by language' | tadg
 
 # Future directions
 
-Templates should conform to Bostoc's reusable chart [guide](http://bost.ocks.org/mike/chart/).
+Templates should conform to Bostock's reusable chart [guide](http://bost.ocks.org/mike/chart/).
