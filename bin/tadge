@@ -6,12 +6,6 @@ from lxml.cssselect import CSSSelector
 
 def process_row_list(row):
     return [html.xpath("string()").strip() for html in row]
-def process_row_dict(row):
-    d = dict()
-    for i,f in enumerate(opts.field):
-        html = row[i]
-        d[f] = html.xpath("string()").strip()
-    return d
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--expression", "-e", help="CSS selector query", type=str)
@@ -48,7 +42,7 @@ if not opts.no_number_processing:
             if re.match("^[0-9,]+$", d):
                 row[i] = d.replace(',','')
 
-if opts.skip_nonfull_rows: # make this something you can turn off
+if opts.skip_nonfull_rows: 
     data = [row for row in data if all(row)]
 
 if opts.skip_first:
